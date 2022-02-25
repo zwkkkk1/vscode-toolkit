@@ -1,0 +1,42 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "files.exclude": {
+    "out": false, // set this to true to hide the "out" folder with the compiled JS files
+    "dist": false // set this to true to hide the "dist" folder with the compiled JS files
+  },
+  "search.exclude": {
+    "out": true, // set this to false to include "out" folder in search results
+    "dist": true // set this to false to include "dist" folder in search results
+  },
+  // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+  "typescript.tsc.autoDetect": "off",
+  "i18n-plugin.localePaths": [
+    {
+      "path": "mall-b2c/client/locale/en/messages.json",
+      "extractPattern": [
+        "/Users/zyf/terminus/gaia-mall/mall-b2c/client/**/*.{ts,tsx,js,jsx}",
+        "/Users/zyf/terminus/gaia-mall/mall-common/**/*.{ts,tsx,js,jsx}",
+        "!/Users/zyf/terminus/gaia-mall/mall-b2c/client/**/*.d.ts",
+        "!/Users/zyf/terminus/gaia-mall/mall-common/**/*.d.ts"
+        ],
+      "locale": "en-US",
+      "pid": "5",
+    },
+    {
+      "path": "mall-b2c/client/locale/zh/messages.json",
+      "locale": "zh-CN",
+      "pid": "5",
+    },
+    {
+      "path": "mall-b2c/client/design/locale/en/messages.json",
+      "extractPattern": ["/Users/zyf/terminus/gaia-mall/mall-b2c/client/design/**/design/@(components|plugin)/**/config.{ts,tsx,js,jsx}", "!/Users/zyf/terminus/gaia-mall/mall-b2c/client/design/**/*.d.ts"],
+      "locale": "en-US",
+      "pid": "6",
+    },
+    {
+      "path": "mall-b2c/client/design/locale/zh/messages.json",
+      "locale": "zh-CN",
+      "pid": "6"
+    }
+  ],
+}

@@ -1,0 +1,217 @@
+{
+	"name": "developer-tool",
+	"displayName": "developer-tool",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.64.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"workspaceContains:package.json",
+    "onLanguage:typescript",
+    "onLanguage:javascript"
+	],
+	"main": "./dist/extension.js",
+	"scripts": {
+		"vscode:prepublish": "yarn run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"test-compile": "tsc -p ./",
+		"test-watch": "tsc -watch -p ./",
+		"pretest": "yarn run test-compile && yarn run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "developer-tool.re-develop-file",
+				"title": "二开当前文件"
+			},
+      {
+        "command": "unusedExports.refresh",
+        "title": "Refresh list of unused exports (and circular imports)",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "unusedExports.showOutput",
+        "title": "Show the output window",
+        "icon": "$(debug)"
+      },
+      {
+        "command": "unusedExports.expandAllUnusedExports",
+        "title": "Expand all rows",
+        "icon": "$(expand-all)"
+      },
+      {
+        "command": "unusedExports.collapseAllUnusedExports",
+        "title": "Collapse all rows",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unusedExports.expandAllCircularImports",
+        "title": "Expand all rows",
+        "icon": "$(expand-all)"
+      },
+      {
+        "command": "unusedExports.collapseAllCircularImports",
+        "title": "Collapse all rows",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unusedExports.enableCircularImports",
+        "title": "Enable detection of circular imports",
+        "icon": "$(circle-large-outline)"
+      },
+      {
+        "command": "unusedExports.disableCircularImports",
+        "title": "Disable detection of circular imports",
+        "icon": "$(circle-large-filled)"
+      },
+      {
+        "command": "unusedExports.openFile",
+        "title": "Open file with unused exports",
+        "icon": "$(symbol-file)"
+      },
+      {
+        "command": "unusedExports.hideFileOrExport",
+        "title": "Hide file or export",
+        "icon": "$(close)"
+      },
+      {
+        "command": "unusedExports.hideFile",
+        "title": "Hide file",
+        "icon": "$(close)"
+      },
+      {
+        "command": "unusedExports.deleteFile",
+        "title": "Delete file with unused exports",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "unusedExports.findInFile",
+        "title": "Find an unused export or circular import in a file",
+        "icon": "$(diff)"
+      }
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "project-overview",
+					"title": "项目总览",
+					"icon": "resources/project-overview-icon.svg"
+				}
+			]
+		},
+    "views": {
+      "project-overview": [
+        {
+          "id": "project-overview.overview",
+          "name": "overview"
+        },
+        {
+          "id": "project-overview.unusedExport",
+          "name": "unusedExport"
+        }
+      ]
+    },
+		"menus": {
+      "view/title": [
+        {
+          "command": "unusedExports.refresh",
+          "when": "view == project-overview.overview",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unusedExports.showOutput",
+          "when": "view == project-overview.overview && config.developer-tools.findUnusedExports.debug",
+          "group": "navigation@2"
+        },
+        {
+          "command": "unusedExports.expandAllUnusedExports",
+          "when": "view == project-overview.unusedExport",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unusedExports.collapseAllUnusedExports",
+          "when": "view == project-overview.unusedExport",
+          "group": "navigation@2"
+        },
+        {
+          "command": "unusedExports.refresh",
+          "when": "view == project-overview.unusedExport",
+          "group": "navigation@3"
+        }
+      ],
+
+      "view/item/context": [
+        {
+          "command": "unusedExports.refresh",
+          "when": "view == overview && viewItem == folder",
+          "group": "inline"
+        },
+        {
+          "command": "unusedExports.deleteFile",
+          "when": "view == unusedExports && viewItem == fileNotUsed",
+          "group": "inline"
+        },
+        {
+          "command": "unusedExports.hideFileOrExport",
+          "when": "view == unusedExports && viewItem != nothingFound",
+          "group": "inline"
+        }
+      ],
+			"explorer/context": [
+				{
+					"command": "developer-tool.re-develop-file",
+					"group": "dev-tools"
+				}
+			]
+		},
+		"configuration": {
+			"title": "Vscode Toolkit - developer-tools",
+			"properties": {
+				"vscode-toolkit.originDirPath": {
+					"type": "string",
+					"default": "origin",
+					"description": "二开工程源仓库所在文件夹 path"
+				},
+				"vscode-toolkit.entryDirPath": {
+					"type": "string",
+					"default": "src",
+					"description": "二开工程源仓库 path"
+				},
+        "developer-tools.findUnusedExports.debug": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource"
+        }
+			}
+		}
+	},
+	"devDependencies": {
+    "@vscode-toolkit/common-utils": "^0.0.1",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.64.0",
+		"@typescript-eslint/eslint-plugin": "^4.26.0",
+		"@typescript-eslint/parser": "^4.26.0",
+		"eslint": "^7.27.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"ts-loader": "^9.2.2",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.2",
+		"webpack": "^5.38.1",
+		"webpack-cli": "^4.7.0"
+	},
+	"dependencies": {
+		"ts-morph": "^13.0.3",
+		"umd-compat-loader": "^2.1.2"
+	}
+}

@@ -1,0 +1,7 @@
+node_modules
+extensions/**/.cache
+extensions/**/node_modules
+extensions/**/dist
+
+package-lock.json
+yarn.lock

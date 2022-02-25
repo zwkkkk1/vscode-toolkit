@@ -1,0 +1,8 @@
+{
+  "name": "@vscode-toolkit/common-utils",
+  "version": "0.0.1",
+  "description": "Common utils for vscode-toolkit plugins",
+  "main": "index.ts",
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../"
+    },
+    {
+      "name": "i18n-tools",
+      "path": "../extensions/i18n-tools",
+    },
+    {
+      "name": "developer-tools",
+      "path": "../extensions/developer-tools",
+    }
+  ],
+}
